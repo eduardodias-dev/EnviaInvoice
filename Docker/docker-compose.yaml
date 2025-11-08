@@ -1,0 +1,11 @@
+services:
+  backend:
+    build: 
+      context: .
+    working_dir: /app
+    volumes:
+      - "..:/app"
+    ports:
+      - "3000:3000"
+    
+    command: sleep infinity

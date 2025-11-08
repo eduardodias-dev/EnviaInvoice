@@ -1,0 +1,25 @@
+{
+  "name": "enviainvoice",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest ./tests",
+    "compose:up": "docker-compose -f ./Docker/docker-compose.yaml up -d",
+    "compose:down": "docker-compose -f ./Docker/docker-compose.yaml down -v",
+    "compose:exec": "docker-compose -f ./Docker/docker-compose.yaml exec -it backend bash"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@types/exceljs": "^0.5.3",
+    "@types/jest": "^30.0.0",
+    "@types/typescript": "^0.4.29",
+    "exceljs": "^4.4.0",
+    "jest": "^30.2.0",
+    "ts-jest": "^29.4.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}
