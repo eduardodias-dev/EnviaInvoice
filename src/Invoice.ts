@@ -6,6 +6,26 @@ export default class Invoice{
         
     }
 
+    getValue() : number {
+        return this.value;
+    }
+    
+    getDate() : Date {
+        return this.date;
+    }
+
+    getServiceDescription(){
+        return "Payment for software development services";
+    }
+
+    getInvoiceNumber() : string {
+        return `${this.number.toString().padStart(4, "0")}/${this.date.getFullYear()}`;
+    }
+
+    getPONumber() : string {
+        return `${this.number.toString()}`;
+    }
+
     getPayeeAddress() : string | undefined {
         return this.payee?.address;
     }
