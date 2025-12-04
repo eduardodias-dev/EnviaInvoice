@@ -7,5 +7,20 @@ services:
       - "..:/app"
     ports:
       - "3000:3000"
-    
     command: sleep infinity
+
+  database:
+    image: postgres:18-alpine3.21
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=senha123
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=db
+    volumes:
+      - ./init_ps.sql:/docker-entrypoint-initdb.d/init.sql
+
+  adminer:
+    image: adminer
+    ports:
+      - "8080:8080"

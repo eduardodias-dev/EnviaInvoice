@@ -4,4 +4,8 @@ export default class Payee{
     ){
 
     }
+
+    validate() : boolean{
+        return true;
+    }
 }

@@ -2,6 +2,7 @@ import Invoice from '../src/Invoice';
 import InvoiceTemplateRepositoryExcel from '../src/InvoiceTemplateRepository';
 import Payee from '../src/Payee';
 import Payer from '../src/Payer';
+import UUID from '../src/UUID';
 
 test("Deve Ler dados do Pagador do arquivo xlsx", async () => {
     const templateRepository = new InvoiceTemplateRepositoryExcel();
@@ -65,7 +66,7 @@ test("Deve salvar a invoice corretamente no arquivo xlsx", async () => {
     const data = await templateRepository.getTemplateData(templateFilePath);
     const invoiceNumber = parseInt(data.invoiceInstanceData.poNumber) + 1;
     
-    const invoice = new Invoice(1, invoiceNumber, 1280, new Date(2025,10,8), 
+    const invoice = new Invoice(UUID.generate(), invoiceNumber, 1280, new Date(2025,10,8), 
         new Payee(data.payeeData.socialName, data.payeeData.address, data.payeeData.cityState, data.payeeData.country), 
         new Payer(data.payerData.name, data.payerData.address, data.payerData.contactName, data.payerData.email));
 
