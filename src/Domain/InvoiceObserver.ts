@@ -8,7 +8,7 @@ export interface InvoiceObserver {
 
 export default class InvoiceEmailSender implements InvoiceObserver {
     notify(data: any): Promise<any> {
-        console.log("Sending Email");
+        console.log("Sending Email", data);
         return new Promise<any>((resolve) =>  resolve(data));
     }
 }

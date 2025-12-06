@@ -1,5 +1,8 @@
 import Invoice from "../Domain/Invoice";
 import { InvoiceRepository } from "../Domain/InvoiceRepository";
+import Payee from "../Domain/Payee";
+import Payer from "../Domain/Payer";
+import UUID from "../Domain/UUID";
 import { DbConnection } from "./connection";
 
 export default class InvoiceRepositoryDatabase implements InvoiceRepository{
@@ -30,4 +33,10 @@ export default class InvoiceRepositoryDatabase implements InvoiceRepository{
             ]);
     }
 
+    async getInvoiceByNumber(number: number): Promise<Invoice | undefined> {
+        const [invoice] = await this.connection.query("SELECT * from envia_invoice.invoices WHERE number = $1", [number]);
+        if(!invoice) throw new Error("Invoice not Found");
+
+        return new Invoice(new UUID(invoice.id), invoice.number, invoice.value, invoice.invoice_date, new Payee(invoice.payee_name, invoice.payee_address, invoice.payee_city_state, invoice.payee_country), new Payer(invoice.payer_name, invoice.payer_address, invoice.payer_contact_name, invoice.payer_email)) 
+    }
 }
