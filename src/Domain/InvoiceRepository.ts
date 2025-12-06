@@ -1,3 +1,4 @@
+import { Service } from "typedi";
 import Invoice from "./Invoice";
 
 export interface InvoiceRepository {
@@ -6,6 +7,7 @@ export interface InvoiceRepository {
     getInvoiceByNumber(number: number): Promise<Invoice | undefined>;
 }
 
+@Service("memory.invoiceRepository")
 export class InvoiceRepositoryMemory implements InvoiceRepository {
     private invoices: Invoice[] = [];
 

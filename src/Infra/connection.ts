@@ -1,4 +1,3 @@
-import mysql from  "mysql2/promise"
 import pgp from "pg-promise";
 
 export interface DbConnection {
@@ -19,5 +18,4 @@ export default class PostgresConnection implements DbConnection{
     async close(): Promise<any> {
         await this.connection.$pool.end();
     }
-
 }

@@ -1,3 +1,5 @@
+import "reflect-metadata";
+import Container from "typedi";
 import CompleteAndSendInvoice from "../src/Application/CompleteAndSendInvoice";
 import Invoice from "../src/Domain/Invoice";
 import InvoiceEmailSender from "../src/Domain/InvoiceObserver";
@@ -13,12 +15,14 @@ let completeAndSendInvoice: CompleteAndSendInvoice;
 
 beforeEach(async () => {
     repository = new InvoiceRepositoryMemory();
-
     defaultPayee = new Payee("test payee", "test address payee", "BH/MG", "Brasil");
     defaultPayer = new Payer("test payer", "test address payer", "John Doe", "test@foo.bar");
 
     const emailObserver = new InvoiceEmailSender();
-    completeAndSendInvoice = new CompleteAndSendInvoice(repository, [emailObserver]);
+    Container.set("invoiceRepository", repository);
+    Container.set("invoice.observers", [emailObserver]);
+    
+    completeAndSendInvoice = Container.get(CompleteAndSendInvoice);
     // await connection.truncate();
 });
 

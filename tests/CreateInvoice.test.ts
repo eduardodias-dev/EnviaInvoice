@@ -8,16 +8,16 @@ import { InvoiceRepository } from "../src/Domain/InvoiceRepository";
 let templateRepository: InvoiceTemplateRepository;
 let connection: DbConnection;
 let invoiceRepository: InvoiceRepository;
+let createInvoice: CreateInvoice;
 
-beforeEach(() => {
+beforeAll(() => {
     templateRepository = new InvoiceTemplateRepositoryExcel();
     connection = new PostgresConnection();
     invoiceRepository = new InvoiceRepositoryDatabase(connection);
-})
+    createInvoice = new CreateInvoice(templateRepository, invoiceRepository);
+});
 
 test("Deve criar a invoice corretamente", async () => {
-    const createInvoice = new CreateInvoice(templateRepository, invoiceRepository);
-
     const lastInserted = await invoiceRepository.getLastInvoiceNumber();
     await createInvoice.execute({value: 1000, date: new Date()});
     await sleep(100);
