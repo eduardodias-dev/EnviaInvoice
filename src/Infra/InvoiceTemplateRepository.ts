@@ -1,13 +1,15 @@
 import { Workbook } from "exceljs";
-import Invoice from "./Invoice";
-import { columnMaps } from "./ColumnMaps";
+import TemplateData from "../Domain/TemplateData";
+import Invoice from "../Domain/Invoice";
+import { columnMaps } from "../Domain/ColumnMaps";
 
 export interface InvoiceTemplateRepository {
-    getTemplateData(filePath: string): Promise<any>;
+    getTemplateData(filePath: string): Promise<TemplateData>;
     saveInvoice(templateFilePath: string, destinationFilePath: string, invoiceData: Invoice): Promise<any>;
 }
 
 export default class InvoiceTemplateRepositoryExcel implements InvoiceTemplateRepository {
+
     async saveInvoice(templateFilePath: string, destinationFilePath: string, invoiceData: Invoice): Promise<any> {
         const workbook = new Workbook();
         await workbook.xlsx.readFile(templateFilePath);
@@ -29,7 +31,7 @@ export default class InvoiceTemplateRepositoryExcel implements InvoiceTemplateRe
         await workbook.xlsx.writeFile(destinationFilePath);
     }
 
-    async getTemplateData(filePath: string): Promise<any> {
+    async getTemplateData(filePath: string): Promise<TemplateData> {
         const workbook = new Workbook();
         await workbook.xlsx.readFile(filePath);
         const sheet = workbook.getWorksheet(1);
@@ -65,7 +67,7 @@ export default class InvoiceTemplateRepositoryExcel implements InvoiceTemplateRe
             })
         }
         
-        const invoiceInstanceData = {
+        const invoiceData = {
             invoiceNumber: sheet?.getCell(columnMaps.invoiceNumber).text,
             poNumber: sheet?.getCell(columnMaps.poNumber).text,
             issueDate: (sheet?.getCell(columnMaps.issueDate).value as Date).toLocaleDateString("pt-br"),
@@ -74,6 +76,6 @@ export default class InvoiceTemplateRepositoryExcel implements InvoiceTemplateRe
             items
         }
 
-        return { payerData, payeeData, bankData, invoiceInstanceData }
+        return { payerData, payeeData, bankData, invoiceData }
     }
 }

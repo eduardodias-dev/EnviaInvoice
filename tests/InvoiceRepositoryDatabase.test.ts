@@ -1,9 +1,9 @@
-import PostgresConnection, { DbConnection } from "../src/connection";
-import Invoice from "../src/Invoice";
-import InvoiceRepositoryDatabase from "../src/InvoiceRepositoryDatabase";
-import Payee from "../src/Payee";
-import Payer from "../src/Payer";
-import UUID from "../src/UUID";
+import Invoice from "../src/Domain/Invoice";
+import Payee from "../src/Domain/Payee";
+import Payer from "../src/Domain/Payer";
+import UUID from "../src/Domain/UUID";
+import PostgresConnection, { DbConnection } from "../src/Infra/connection";
+import InvoiceRepositoryDatabase from "../src/Infra/InvoiceRepositoryDatabase";
 
 let connection: DbConnection;
 let repository: InvoiceRepositoryDatabase;

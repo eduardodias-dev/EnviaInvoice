@@ -1,6 +1,6 @@
+import Invoice from "../Domain/Invoice";
+import { InvoiceRepository } from "../Domain/InvoiceRepository";
 import { DbConnection } from "./connection";
-import Invoice from "./Invoice";
-import { InvoiceRepository } from "./InvoiceRepository";
 
 export default class InvoiceRepositoryDatabase implements InvoiceRepository{
     constructor(readonly connection: DbConnection){}

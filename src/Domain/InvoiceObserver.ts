@@ -9,7 +9,7 @@ export interface InvoiceObserver {
 export default class InvoiceEmailSender implements InvoiceObserver {
     notify(data: any): Promise<any> {
         console.log("Sending Email");
-        return new Promise<any>((resolve) =>  resolve(null));
+        return new Promise<any>((resolve) =>  resolve(data));
     }
 }
 

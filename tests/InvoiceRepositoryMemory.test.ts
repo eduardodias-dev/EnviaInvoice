@@ -1,6 +1,6 @@
-import Invoice from "../src/Invoice";
-import { InvoiceRepositoryMemory } from "../src/InvoiceRepository"
-import UUID from "../src/UUID";
+import Invoice from "../src/Domain/Invoice";
+import { InvoiceRepositoryMemory } from "../src/Domain/InvoiceRepository";
+import UUID from "../src/Domain/UUID";
 
 test("Deve retornar o último número da invoice corretament", async () => {
     const repository = new InvoiceRepositoryMemory();

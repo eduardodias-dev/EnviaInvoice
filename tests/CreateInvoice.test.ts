@@ -1,17 +1,15 @@
-import { create } from "domain";
-import PostgresConnection, { DbConnection } from "../src/connection";
-import CreateInvoice from "../src/CreateInvoice"
-import InvoiceRepositoryDatabase from "../src/InvoiceRepositoryDatabase";
-import InvoiceTemplateRepositoryExcel, { InvoiceTemplateRepository } from "../src/InvoiceTemplateRepository"
+import PostgresConnection, { DbConnection } from "../src/Infra/connection";
+import CreateInvoice from "../src/Application/CreateInvoice"
+import InvoiceRepositoryDatabase from "../src/Infra/InvoiceRepositoryDatabase";
+import InvoiceTemplateRepositoryExcel, { InvoiceTemplateRepository } from "../src/Infra/InvoiceTemplateRepository"
 import { sleep } from "./InvoiceRepositoryDatabase.test";
-import { InvoiceRepository } from "../src/InvoiceRepository";
-import { after } from "node:test";
+import { InvoiceRepository } from "../src/Domain/InvoiceRepository";
 
 let templateRepository: InvoiceTemplateRepository;
 let connection: DbConnection;
 let invoiceRepository: InvoiceRepository;
 
-beforeEach(async () => {
+beforeEach(() => {
     templateRepository = new InvoiceTemplateRepositoryExcel();
     connection = new PostgresConnection();
     invoiceRepository = new InvoiceRepositoryDatabase(connection);

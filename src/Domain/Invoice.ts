@@ -1,6 +1,7 @@
 import { InvoiceObserver } from "./InvoiceObserver";
 import Payee from "./Payee";
 import Payer from "./Payer";
+import TemplateData from "./TemplateData";
 import UUID from "./UUID";
 
 export default class Invoice{
@@ -99,5 +100,15 @@ export default class Invoice{
 
     getId(): string{
         return this.id.getValue();
+    }
+
+    getFileName(){
+        return `invoice_${this.getRawNumber()}_${this.getDate().getFullYear()}`
+    }
+
+    static generateFromTemplate(id: UUID, number: number, value: number, date: Date, template: TemplateData){
+        const payee = new Payee(template.payeeData.socialName!, template.payeeData.address!, template.payeeData.cityState!, template.payeeData.country!);
+        const payer = new Payer(template.payerData.name!, template.payerData.address!, template.payerData.contactName!, template.payerData.email!);
+        return new Invoice(id, number, value, date, payee, payer);
     }
  }
