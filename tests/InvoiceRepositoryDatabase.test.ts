@@ -28,7 +28,7 @@ test("Deve retornar o último número da invoice corretamente", async () => {
     const lastInserted = await repository.getLastInvoiceNumber();
     let number = 0;
     if(lastInserted && lastInserted.number)
-        number = lastInserted.number;
+        number = parseInt(lastInserted.number);
     await repository.addInvoice(new Invoice(UUID.generate(), number+1, 100, new Date(), defaultPayee, defaultPayer))
     await sleep(100);
     await repository.addInvoice(new Invoice(UUID.generate(), number+2, 100, new Date(), defaultPayee, defaultPayer))
