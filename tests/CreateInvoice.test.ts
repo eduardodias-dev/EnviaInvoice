@@ -2,8 +2,8 @@ import PostgresConnection, { DbConnection } from "../src/Infra/connection";
 import CreateInvoice from "../src/Application/CreateInvoice"
 import InvoiceRepositoryDatabase from "../src/Infra/InvoiceRepositoryDatabase";
 import InvoiceTemplateRepositoryExcel, { InvoiceTemplateRepository } from "../src/Infra/InvoiceTemplateRepository"
-import { sleep } from "./InvoiceRepositoryDatabase.test";
 import { InvoiceRepository } from "../src/Domain/InvoiceRepository";
+import {sleep} from "./util";
 
 let templateRepository: InvoiceTemplateRepository;
 let connection: DbConnection;
@@ -22,7 +22,7 @@ test("Deve criar a invoice corretamente", async () => {
     await createInvoice.execute({value: 1000, date: new Date()});
     await sleep(100);
     const nextInserted = await invoiceRepository.getLastInvoiceNumber();
-    expect(parseInt(nextInserted.number)).toBe(parseInt(lastInserted.number)+1);
+    expect(nextInserted).toBe(lastInserted + 1);
 });
 
 afterAll(async () => {

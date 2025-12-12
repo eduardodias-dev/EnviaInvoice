@@ -8,9 +8,9 @@ import { DbConnection } from "./connection";
 export default class InvoiceRepositoryDatabase implements InvoiceRepository{
     constructor(readonly connection: DbConnection){}
 
-    async getLastInvoiceNumber(): Promise<any> {
+    async getLastInvoiceNumber(): Promise<number> {
         const [result] = await this.connection.query("SELECT number from envia_invoice.invoices order by number desc limit 1", []);
-        return result;
+        return !result || !result.number ? 0 : result.number;
     }
 
     async addInvoice(invoice: Invoice): Promise<any> {

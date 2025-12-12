@@ -2,7 +2,7 @@ import { Service } from "typedi";
 import Invoice from "./Invoice";
 
 export interface InvoiceRepository {
-    getLastInvoiceNumber(): Promise<any>;
+    getLastInvoiceNumber(): Promise<number>;
     addInvoice(data: Invoice): Promise<any>;
     getInvoiceByNumber(number: number): Promise<Invoice | undefined>;
 }
@@ -11,7 +11,7 @@ export interface InvoiceRepository {
 export class InvoiceRepositoryMemory implements InvoiceRepository {
     private invoices: Invoice[] = [];
 
-    getLastInvoiceNumber(): Promise<any> {
+    getLastInvoiceNumber(): Promise<number> {
         const ordered = this.invoices.sort((a, b) => b.getRawNumber() - a.getRawNumber());
         
         return Promise.resolve(ordered[0].getRawNumber());

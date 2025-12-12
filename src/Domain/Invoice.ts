@@ -28,7 +28,8 @@ export default class Invoice{
             value: this.getValue(), 
             date: this.getDate(),
             payee: this.payee, 
-            payer: this.payer
+            payer: this.payer,
+            fileName: this.getFileName(),
         };
 
         for(const observer of this.observers){

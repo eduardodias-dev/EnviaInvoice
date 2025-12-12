@@ -2,13 +2,18 @@ import { Workbook } from "exceljs";
 import TemplateData from "../Domain/TemplateData";
 import Invoice from "../Domain/Invoice";
 import { columnMaps } from "../Domain/ColumnMaps";
+import { readFile } from "fs/promises";
 
 export interface InvoiceTemplateRepository {
     getTemplateData(filePath: string): Promise<TemplateData>;
     saveInvoice(templateFilePath: string, destinationFilePath: string, invoiceData: Invoice): Promise<any>;
+    getInvoiceFile(filePath: string): Promise<Buffer | string>;
 }
 
 export default class InvoiceTemplateRepositoryExcel implements InvoiceTemplateRepository {
+    async getInvoiceFile(filePath: string): Promise<Buffer | string> {
+        return await readFile(filePath);
+    }
 
     async saveInvoice(templateFilePath: string, destinationFilePath: string, invoiceData: Invoice): Promise<any> {
         const workbook = new Workbook();
