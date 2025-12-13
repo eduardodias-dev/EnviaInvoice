@@ -1,8 +1,8 @@
-import Invoice from "../Domain/Invoice";
-import { InvoiceRepository } from "../Domain/InvoiceRepository";
-import Payee from "../Domain/Payee";
-import Payer from "../Domain/Payer";
-import UUID from "../Domain/UUID";
+import Invoice from "../../Domain/Invoice";
+import { InvoiceRepository } from "../../Domain/InvoiceRepository";
+import Payee from "../../Domain/Payee";
+import Payer from "../../Domain/Payer";
+import UUID from "../../Domain/UUID";
 import { DbConnection } from "./connection";
 
 export default class InvoiceRepositoryDatabase implements InvoiceRepository{

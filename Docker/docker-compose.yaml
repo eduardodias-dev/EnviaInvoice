@@ -30,3 +30,6 @@ services:
       ports:
         - "1025:1025"
         - "8025:8025"
+      platform: linux/amd64
+networks:
+  envia_invoice: {}

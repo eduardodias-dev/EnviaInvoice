@@ -1,7 +1,7 @@
 import nodemailer, { Transporter } from "nodemailer";
 
 export interface EmailAdapter{
-    send(to: string, from: string, subject: string, data: any, attachments?: Attachment[]): Promise<any>;
+    send(to: string, from: string, subject: string, html: string, attachments?: Attachment[]): Promise<any>;
 }
 
 export default class NodeMailerAdapter implements EmailAdapter{
@@ -13,16 +13,15 @@ export default class NodeMailerAdapter implements EmailAdapter{
             secure: false
         })
     }
-    async send(to: string, from: string, subject: string, data: any, attachments?: Attachment[]): Promise<any> {
+    async send(to: string, from: string, subject: string, html: string, attachments?: Attachment[]): Promise<any> {
         await this.transporter.sendMail({
             to: to,
             from: from,
             subject: subject,
-            html: JSON.stringify(data),
+            html: html,
             attachments: attachments,
         })
     }
-
 }
 
 type Attachment = {

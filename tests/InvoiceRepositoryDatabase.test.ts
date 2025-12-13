@@ -2,8 +2,8 @@ import Invoice from "../src/Domain/Invoice";
 import Payee from "../src/Domain/Payee";
 import Payer from "../src/Domain/Payer";
 import UUID from "../src/Domain/UUID";
-import PostgresConnection, { DbConnection } from "../src/Infra/connection";
-import InvoiceRepositoryDatabase from "../src/Infra/InvoiceRepositoryDatabase";
+import PostgresConnection, { DbConnection } from "../src/Infra/database/connection";
+import InvoiceRepositoryDatabase from "../src/Infra/database/InvoiceRepositoryDatabase";
 import { sleep } from './util';
 
 let connection: DbConnection;

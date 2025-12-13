@@ -1,38 +1,30 @@
 import "reflect-metadata";
 import Container from "typedi";
 import CompleteAndSendInvoice from "../src/Application/CompleteAndSendInvoice";
-import Invoice from "../src/Domain/Invoice";
 import InvoiceEmailSender from "../src/Domain/InvoiceObserver";
-import { InvoiceRepository, InvoiceRepositoryMemory } from "../src/Domain/InvoiceRepository";
-import Payee from "../src/Domain/Payee";
-import Payer from "../src/Domain/Payer";
-import UUID from "../src/Domain/UUID";
-import NodeMailerAdapter from "../src/Infra/EmailAdapter";
-import InvoiceTemplateRepositoryExcel, {InvoiceTemplateRepository} from "../src/Infra/InvoiceTemplateRepository";
-import InvoiceRepositoryDatabase from "../src/Infra/InvoiceRepositoryDatabase";
-import PostgresConnection, {DbConnection} from "../src/Infra/connection";
+import { InvoiceRepository } from "../src/Domain/InvoiceRepository";
+import NodeMailerAdapter from "../src/Infra/email/EmailAdapter";
+import InvoiceRepositoryDatabase from "../src/Infra/database/InvoiceRepositoryDatabase";
+import PostgresConnection, {DbConnection} from "../src/Infra/database/connection";
 import { sleep } from "./util";
+import {FileManager, NodeFsFileManager} from "../src/Infra/io/fileManager";
 
 let repository: InvoiceRepository;
-let defaultPayee: Payee;
-let defaultPayer: Payer;
 let completeAndSendInvoice: CompleteAndSendInvoice;
-let invoiceTemplateRepository: InvoiceTemplateRepository;
+let fileManager: FileManager;
 let connection: DbConnection;
 
 beforeEach(async () => {
     connection = new PostgresConnection();
     repository = new InvoiceRepositoryDatabase(connection);
-    defaultPayee = new Payee("test payee", "test address payee", "BH/MG", "Brasil");
-    defaultPayer = new Payer("test payer", "test address payer", "John Doe", "test@foo.bar");
-    invoiceTemplateRepository = new InvoiceTemplateRepositoryExcel();
-    const emailObserver = new InvoiceEmailSender(new NodeMailerAdapter(), invoiceTemplateRepository);
+    fileManager = new NodeFsFileManager();
+
+    const emailObserver = new InvoiceEmailSender(new NodeMailerAdapter(), fileManager);
 
     Container.set("invoiceRepository", repository);
     Container.set("invoice.observers", [emailObserver]);
     
     completeAndSendInvoice = Container.get(CompleteAndSendInvoice);
-    // await connection.truncate();
 });
 
 test("Deve notificar ao completar invoice", async () => {

@@ -1,6 +1,6 @@
-import PostgresConnection, { DbConnection } from "../src/Infra/connection";
+import PostgresConnection, { DbConnection } from "../src/Infra/database/connection";
 import CreateInvoice from "../src/Application/CreateInvoice"
-import InvoiceRepositoryDatabase from "../src/Infra/InvoiceRepositoryDatabase";
+import InvoiceRepositoryDatabase from "../src/Infra/database/InvoiceRepositoryDatabase";
 import InvoiceTemplateRepositoryExcel, { InvoiceTemplateRepository } from "../src/Infra/InvoiceTemplateRepository"
 import { InvoiceRepository } from "../src/Domain/InvoiceRepository";
 import {sleep} from "./util";
